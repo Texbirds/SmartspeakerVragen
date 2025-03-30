@@ -1,0 +1,8 @@
+{
+    "C_Cpp.intelliSenseEngine": "default",
+    "idf.espIdfPathWin": "c:\\esp\\v5.1.6\\esp-idf",
+    "idf.toolsPathWin": "c:\\esp-tools\\.espressif",
+    "idf.pythonInstallPath": "c:\\esp-tools\\.espressif\\tools\\idf-python\\3.11.2\\python.exe",
+    "idf.portWin": "COM5",
+    "idf.flashType": "UART"
+}
