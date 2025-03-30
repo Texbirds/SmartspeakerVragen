@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "living_stream_m3u_aac",
-    "project_version":    "9e8e575-dirty",
+    "project_version":    "c229c30-dirty",
     "project_path":       "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard",
     "idf_path":           "C:/esp/v5.1.6/esp-idf",
     "build_dir":          "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build",
@@ -1780,7 +1780,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/main/libmain.a",
-            "sources": [ "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/main.c", "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/button.c", "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/recorder.c", "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/sdcard.c" ],
+            "sources": [ "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/main.c", "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/button.c", "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/recorder.c", "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/sdcard.c", "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/main/wifi.c" ],
             "include_dirs": [ "." ]
         },
         "max1704x": {

@@ -14,6 +14,12 @@
 # EXTERNAL cache entries
 ########################
 
+//No help, variable specified on the command line.
+CCACHE_ENABLE:UNINITIALIZED=1
+
+//Path to a program.
+CCACHE_FOUND:FILEPATH=C:/esp-tools/.espressif/tools/ccache/4.10.2/ccache-4.10.2-windows-x86_64/ccache.exe
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=C:/esp-tools/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/xtensa-esp32-elf/bin/xtensa-esp32-elf-addr2line.exe
 
@@ -154,7 +160,7 @@ CMAKE_INSTALL_MANDIR:PATH=
 CMAKE_INSTALL_OLDINCLUDEDIR:PATH=/usr/include
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/recording_to_sdcard
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/living_stream_m3u_aac
 
 //Run-time variable data (LOCALSTATEDIR/run)
 CMAKE_INSTALL_RUNSTATEDIR:PATH=
@@ -347,6 +353,9 @@ Mbed TLS_IS_TOP_LEVEL:STATIC=OFF
 Mbed TLS_SOURCE_DIR:STATIC=C:/esp/v5.1.6/esp-idf/components/mbedtls/mbedtls
 
 //No help, variable specified on the command line.
+PYTHON:UNINITIALIZED=c:\esp-tools\.espressif\python_env\idf5.1_py3.11_env\Scripts\python.exe
+
+//No help, variable specified on the command line.
 PYTHON_DEPS_CHECKED:UNINITIALIZED=1
 
 //No help, variable specified on the command line.
@@ -393,15 +402,6 @@ mbedx509_LIB_DEPENDS:STATIC=general;__idf_cxx;general;__idf_newlib;general;__idf
 
 //Dependencies for the target
 p256m_LIB_DEPENDS:STATIC=general;__idf_cxx;general;__idf_newlib;general;__idf_freertos;general;__idf_esp_hw_support;general;__idf_heap;general;__idf_log;general;__idf_soc;general;__idf_hal;general;__idf_esp_rom;general;__idf_esp_common;general;__idf_esp_system;general;__idf_xtensa;
-
-//Value Computed by CMake
-recording_to_sdcard_BINARY_DIR:STATIC=C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build
-
-//Value Computed by CMake
-recording_to_sdcard_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-recording_to_sdcard_SOURCE_DIR:STATIC=C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard
 
 
 ########################
@@ -619,7 +619,7 @@ THREADS_HAVE_PTHREAD_ARG:INTERNAL=FALSE
 //CHECK_TYPE_SIZE: sizeof(time_t)
 TIME_T_SIZE:INTERNAL=8
 //CMAKE_INSTALL_PREFIX during last run
-_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/recording_to_sdcard
+_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/living_stream_m3u_aac
 //Compiler reason failure
 _Python3_Compiler_REASON_FAILURE:INTERNAL=
 //Development reason failure
