@@ -409,6 +409,426 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/esp_idf_lib_helpers/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/i2cdev/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ads111x/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ads130e08/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/aht/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/am2320/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/bh1750/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/bh1900nux/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/bme680/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/bmp180/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/bmp280/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/button/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/calibration/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ccs811/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/lib8tion/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/color/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/dht/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/dps310/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ds1302/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ds1307/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/onewire/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ds18x20/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ds3231/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ds3502/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/encoder/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/example/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/framebuffer/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/hd44780/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/hdc1000/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/hmc5883l/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ht16k33/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/hts221/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/hx711/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/icm42670/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ina219/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ina260/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ina3221/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/lc709203f/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/led_strip/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/led_strip_spi/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/lm75/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ls7366r/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/max1704x/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/max31725/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/max31855/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/max31865/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/max7219/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/mcp23008/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/mcp23x17/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/mcp342x/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/mcp4725/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/mcp960x/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/mcp9808/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/mhz19b/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/mpu6050/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ms5611/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/noise/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/pca9557/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/pca9685/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/pcf8563/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/pcf8574/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/pcf8575/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/pcf8591/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/qmc5883l/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/rda5807m/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/scd30/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/scd4x/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/sgm58031/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/sgp40/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/sht3x/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/sht4x/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/si7021/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/sts21/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/sts3x/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/tca9548/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/tca95x5/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/tda74xx/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/tsl2561/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/tsl2591/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/tsl4531/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/tsys01/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/ultrasonic/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/veml7700/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/wiegand/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build/esp-idf/espressif__jsmn/cmake_install.cmake")
 endif()
 
