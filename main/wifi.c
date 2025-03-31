@@ -8,7 +8,7 @@
 #define WIFI_PASS "12345678"
 
 static const char *TAG = "WiFi";
-static EventGroupHandle_t wifi_event_group;
+EventGroupHandle_t wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 
 static void wifi_event_handler(void *arg, esp_event_base_t event_base,

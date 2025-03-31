@@ -7,6 +7,7 @@
 #include "wav_encoder.h"
 #include "fatfs_stream.h"
 #include "board.h"
+#include "transcriber.h"
 
 #define SAMPLE_RATE 44100
 #define FILE_PATH "/sdcard/ask.wav"
@@ -77,4 +78,12 @@ void stop_recording() {
     wav_encoder = NULL;
     fatfs_stream_writer = NULL;
     is_recording = false;
+
+    ESP_LOGI(TAG, "Sending recorded audio for transcription...");
+    esp_err_t err = transcriber_transcribe_file(FILE_PATH);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Transcription failed with error: %s", esp_err_to_name(err));
+    } else {
+        ESP_LOGI(TAG, "Transcription complete.");
+    }
 }
