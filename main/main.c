@@ -9,6 +9,7 @@
 #include "freertos/task.h"
 #include "nvs_flash.h"
 #include "esp_wifi.h"
+#include "chatgpt_api.h"
 
 static const char *TAG = "MAIN";
 
