@@ -1,6 +1,3 @@
-#ifndef TRANSCRIBER_H
-#define TRANSCRIBER_H
-
 // default includes
 #include <stdio.h>
 #include <sys/param.h>
@@ -14,7 +11,7 @@
 // handling JSON
 #include <cJSON.h>
 
-// logging for ESP
+// logging for esp
 #include "esp_err.h"
 
 // memory management
@@ -27,17 +24,16 @@
 
 #define MAX_HTTP_RECV_BUFFER 512
 #define MAX_HTTP_OUTPUT_BUFFER 2048
-#define API_KEY "806ea076e8e347b197f6a1585336dd9d"
+#define API_KEY "36074272bf2a401c94c00a4995743d20"
 
 // USE THIS FOR API CALLS!!!
 void set_callback(void (*new_update_callback)(char*));
 void transcribe_file_with_api(char *file_path);
 
-// Definitions for the C source file itself
+// definitions for the C source file itself
 void upload_file_to_assembly(esp_http_client_handle_t client, char *file_path);
 void transcribe(esp_http_client_handle_t client);
 void get_transcript(esp_http_client_handle_t client);
+
 void handle_http_event_finish(esp_http_client_handle_t client, cJSON *json);
 void make_sdcard_ready();
-
-#endif // TRANSCRIBER_H

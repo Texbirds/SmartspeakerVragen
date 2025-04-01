@@ -1,19 +1,5 @@
 #include "transcriber.h"
 
-#include <stdio.h>
-#include <sys/param.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <esp_http_client.h>
-#include <esp_tls.h>
-#include <cJSON.h>
-#include "esp_err.h"
-#include "esp_heap_caps.h"
-#include "esp_vfs_fat.h"
-#include "sdmmc_cmd.h"
-#include "driver/sdmmc_host.h"
-
-void check_file_exists(const char *path);
 char *audio_url = "";
 char *id = "";
 
@@ -23,17 +9,18 @@ void set_callback(void (*new_update_callback)(char*)){
     return_callback = new_update_callback;
 }
 
-static const char *TAG = "Transcriber";
+static const char *TAG = "Text-to-speech";
 
-esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
-    static char *output_buffer;
-    static int output_len;
+esp_err_t _http_event_handler(esp_http_client_event_t *evt)
+{
+    static char *output_buffer;  // Buffer to store response of http request from event handler
+    static int output_len;       // Stores number of bytes read
     switch(evt->event_id) {
         case HTTP_EVENT_ERROR:
             ESP_LOGI(TAG, "HTTP_EVENT_ERROR");
             break;
         case HTTP_EVENT_ON_CONNECTED:
-            ESP_LOGI(TAG, "HTTP_EVENT_ON_CONNECTED");
+        ESP_LOGI(TAG, "HTTP_EVENT_ON_CONNECTED");
             break;
         case HTTP_EVENT_HEADER_SENT:
             ESP_LOGI(TAG, "HTTP_EVENT_HEADER_SENT");
@@ -41,7 +28,12 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
         case HTTP_EVENT_ON_HEADER:
             break;
         case HTTP_EVENT_ON_DATA:
+            /*
+             *  Check for chunked encoding is added as the URL for chunked encoding used in this example returns binary data.
+             *  However, event handler can also be used in case chunked encoding is used.
+             */
             if (!esp_http_client_is_chunked_response(evt->client)) {
+                // If user_data buffer is configured, copy the response into the buffer
                 int copy_len = 0;
                 if (evt->user_data) {
                     copy_len = MIN(evt->data_len, (MAX_HTTP_OUTPUT_BUFFER - output_len));
@@ -65,10 +57,13 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
                 }
                 output_len += copy_len;
             }
+
             break;
         case HTTP_EVENT_ON_FINISH:
             ESP_LOGI(TAG, "HTTP_EVENT_ON_FINISH");
             if (output_buffer != NULL) {
+                // Response is accumulated in output_buffer. Uncomment the below line to print the accumulated response
+                // printf("received: %s\n", output_buffer);
                 handle_http_event_finish(evt->client, cJSON_ParseWithLength(output_buffer, output_len));
                 free(output_buffer);
                 output_buffer = NULL;
@@ -99,87 +94,6 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
     return ESP_OK;
 }
 
-void transcribe(esp_http_client_handle_t client) {
-    if (audio_url == NULL || strlen(audio_url) == 0) {
-        ESP_LOGE(TAG, "No audio URL found, cannot transcribe.");
-        return;
-    }
-
-    esp_http_client_set_url(client, "https://api.eu.assemblyai.com/v2/transcript");
-    esp_http_client_set_header(client, "Authorization", API_KEY);
-    esp_http_client_set_header(client, "Content-type", "application/json");
-
-    cJSON *json = cJSON_CreateObject();
-    cJSON_AddItemToObject(json, "audio_url", cJSON_CreateString(audio_url));
-    cJSON_AddItemToObject(json, "language_detection", cJSON_CreateBool(true));
-
-    char *jsonData = cJSON_PrintUnformatted(json);
-    esp_http_client_set_post_field(client, jsonData, strlen(jsonData));
-    esp_http_client_set_method(client, HTTP_METHOD_POST);
-
-    esp_err_t err = esp_http_client_perform(client);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "HTTP transcription request failed: %s", esp_err_to_name(err));
-    }
-
-    cJSON_Delete(json);
-    free(jsonData);
-}
-
-
-void transcribe_file_with_api(char *file_path) {
-    const char *server_cert_pem_start = "-----BEGIN CERTIFICATE-----\n"
-"MIIFBjCCAu6gAwIBAgIRAIp9PhPWLzDvI4a9KQdrNPgwDQYJKoZIhvcNAQELBQAw\n"
-"TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh\n"
-"cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMjQwMzEzMDAwMDAw\n"
-"WhcNMjcwMzEyMjM1OTU5WjAzMQswCQYDVQQGEwJVUzEWMBQGA1UEChMNTGV0J3Mg\n"
-"RW5jcnlwdDEMMAoGA1UEAxMDUjExMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB\n"
-"CgKCAQEAuoe8XBsAOcvKCs3UZxD5ATylTqVhyybKUvsVAbe5KPUoHu0nsyQYOWcJ\n"
-"DAjs4DqwO3cOvfPlOVRBDE6uQdaZdN5R2+97/1i9qLcT9t4x1fJyyXJqC4N0lZxG\n"
-"AGQUmfOx2SLZzaiSqhwmej/+71gFewiVgdtxD4774zEJuwm+UE1fj5F2PVqdnoPy\n"
-"6cRms+EGZkNIGIBloDcYmpuEMpexsr3E+BUAnSeI++JjF5ZsmydnS8TbKF5pwnnw\n"
-"SVzgJFDhxLyhBax7QG0AtMJBP6dYuC/FXJuluwme8f7rsIU5/agK70XEeOtlKsLP\n"
-"Xzze41xNG/cLJyuqC0J3U095ah2H2QIDAQABo4H4MIH1MA4GA1UdDwEB/wQEAwIB\n"
-"hjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwEgYDVR0TAQH/BAgwBgEB\n"
-"/wIBADAdBgNVHQ4EFgQUxc9GpOr0w8B6bJXELbBeki8m47kwHwYDVR0jBBgwFoAU\n"
-"ebRZ5nu25eQBc4AIiMgaWPbpm24wMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzAC\n"
-"hhZodHRwOi8veDEuaS5sZW5jci5vcmcvMBMGA1UdIAQMMAowCAYGZ4EMAQIBMCcG\n"
-"A1UdHwQgMB4wHKAaoBiGFmh0dHA6Ly94MS5jLmxlbmNyLm9yZy8wDQYJKoZIhvcN\n"
-"AQELBQADggIBAE7iiV0KAxyQOND1H/lxXPjDj7I3iHpvsCUf7b632IYGjukJhM1y\n"
-"v4Hz/MrPU0jtvfZpQtSlET41yBOykh0FX+ou1Nj4ScOt9ZmWnO8m2OG0JAtIIE38\n"
-"01S0qcYhyOE2G/93ZCkXufBL713qzXnQv5C/viOykNpKqUgxdKlEC+Hi9i2DcaR1\n"
-"e9KUwQUZRhy5j/PEdEglKg3l9dtD4tuTm7kZtB8v32oOjzHTYw+7KdzdZiw/sBtn\n"
-"UfhBPORNuay4pJxmY/WrhSMdzFO2q3Gu3MUBcdo27goYKjL9CTF8j/Zz55yctUoV\n"
-"aneCWs/ajUX+HypkBTA+c8LGDLnWO2NKq0YD/pnARkAnYGPfUDoHR9gVSp/qRx+Z\n"
-"WghiDLZsMwhN1zjtSC0uBWiugF3vTNzYIEFfaPG7Ws3jDrAMMYebQ95JQ+HIBD/R\n"
-"PBuHRTBpqKlyDnkSHDHYPiNX3adPoPAcgdF3H2/W0rmoswMWgTlLn1Wu0mrks7/q\n"
-"pdWfS6PJ1jty80r2VKsM/Dj3YIDfbjXKdaFU5C+8bhfJGqU3taKauuz0wHVGT3eo\n"
-"6FlWkWYtbt4pgdamlwVeZEW+LM7qZEJEsMNPrfC03APKmZsJgpWCDWOKZvkZcvjV\n"
-"uYkQ4omYCTX5ohy+knMjdOmdH9c7SpqEWBDC86fiNex+O0XOMEZSa8DA\n"
-"-----END CERTIFICATE-----\n";
-
-esp_http_client_config_t config = {
-    .url = "https://api.eu.assemblyai.com/v2",
-    .event_handler = _http_event_handler,
-    .cert_pem = server_cert_pem_start,
-};
-
-esp_http_client_handle_t client = esp_http_client_init(&config);
-if (client == NULL) {
-    ESP_LOGE(TAG, "Failed to init HTTP client");
-    return;
-}
-
-ESP_LOGI(TAG, "Uploading file to AssemblyAI");
-upload_file_to_assembly(client, file_path);
-
-ESP_LOGI(TAG, "Sending transcription request...");
-transcribe(client);
-
-esp_http_client_cleanup(client);
-vTaskDelete(NULL);
-}
-
 void handle_http_event_finish(esp_http_client_handle_t client, cJSON *json) {
     if (json == NULL) {
         ESP_LOGE(TAG, "Failed to parse JSON");
@@ -188,84 +102,118 @@ void handle_http_event_finish(esp_http_client_handle_t client, cJSON *json) {
 
     if (cJSON_GetObjectItem(json, "status") != NULL) {
         char* status = cJSON_GetObjectItem(json, "status")->valuestring;
-        if (strcmp(status, "error") == 0) {
+        if (strcmp(status, "error") == 0) //returns 0 on true
+        {
             ESP_LOGE(TAG, "Status error, returning");
             return;
         }
+        
     }
 
     uint8_t state = 0;
 
-    if (cJSON_GetObjectItem(json, "id") != NULL) {
+    if (cJSON_GetObjectItem(json, "id") != NULL)
+    {
         state = 1;
     }
     
-    if (cJSON_GetObjectItem(json, "text") != NULL  && !cJSON_IsNull(cJSON_GetObjectItem(json, "text"))) {
+    if (cJSON_GetObjectItem(json, "text") != NULL  && !cJSON_IsNull(cJSON_GetObjectItem(json, "text"))) 
+    {
         state = 2;
     }
     
     switch (state) {
-        case 0:
+        case 0: // uploading file, retrieving audio_url
+
             cJSON *temp_url = cJSON_GetObjectItem(json, "upload_url");
-            if (temp_url != NULL) {
+            if (temp_url != NULL)
+            {
                 audio_url = cJSON_GetStringValue(temp_url);
                 ESP_LOGI(TAG, "extracted audio_url: %s\n", audio_url);
             }
-            break;
-        case 1:
+        break;
+        case 1: // transcript executed, retrieving id transcript
             cJSON *temp_id = cJSON_GetObjectItem(json, "id");
-            if (temp_id != NULL) {
+            if (temp_id != NULL)
+            {
+                // printf(cJSON_PrintUnformatted(temp_id));
                 id = cJSON_GetStringValue(temp_id);
                 ESP_LOGI(TAG, "extracted id:\n%s\n", id);
-                esp_http_client_close(client);
+                esp_http_client_close(client); // close client so reset connection
                 get_transcript(client);
             }
-            break;
+        break;
         case 2:
             cJSON *temp_text = cJSON_GetObjectItem(json, "text");
-            if (temp_text != NULL) {
+            if (temp_text != NULL)
+            {
                 char *text = cJSON_GetStringValue(temp_text);
                 ESP_LOGI(TAG, "extracted text:\n%s\n", text);
                 return_callback(text);
             }
-            break;
+        break;
     }
 }
 
-void get_transcript(esp_http_client_handle_t client) {
-    sleep(2);
-
-    ESP_LOGI(TAG, "Setting URL");
-    char* url = malloc((strlen(id) + 45));
-    if (!url) {
-        // Foutafhandeling als malloc niet lukt
-        ESP_LOGI(TAG, "Error: Memory allocation failed for URL");
-        return;
+void check_file_exists(const char *path) {
+    struct stat st;
+    if (stat(path, &st) == 0) {
+        ESP_LOGI(TAG, "File exists: %s\n", path);
+    } else {
+        ESP_LOGE(TAG, "File does NOT exist: %s\n", path);
     }
+}
 
-    //Formatteer de URL met de gegeven id
-    snprintf(url, (strlen(id) + 45), "https://api.eu.assemblyai.com/v2/transcript/%s", id);
+void transcribe_file_with_api(char *file_path){
 
-    //Log de URL voor debugging
-    ESP_LOGI(TAG, "Generated URL: %s\n", url);
+const char *server_cert_pem_start = 
+"-----BEGIN CERTIFICATE-----\n"
+"MIIEkjCCA3qgAwIBAgITBn+USionzfP6wq4rAfkI7rnExjANBgkqhkiG9w0BAQsF\n"
+"ADCBmDELMAkGA1UEBhMCVVMxEDAOBgNVBAgTB0FyaXpvbmExEzARBgNVBAcTClNj\n"
+"b3R0c2RhbGUxJTAjBgNVBAoTHFN0YXJmaWVsZCBUZWNobm9sb2dpZXMsIEluYy4x\n"
+"OzA5BgNVBAMTMlN0YXJmaWVsZCBTZXJ2aWNlcyBSb290IENlcnRpZmljYXRlIEF1\n"
+"dGhvcml0eSAtIEcyMB4XDTE1MDUyNTEyMDAwMFoXDTM3MTIzMTAxMDAwMFowOTEL\n"
+"MAkGA1UEBhMCVVMxDzANBgNVBAoTBkFtYXpvbjEZMBcGA1UEAxMQQW1hem9uIFJv\n"
+"b3QgQ0EgMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALJ4gHHKeNXj\n"
+"ca9HgFB0fW7Y14h29Jlo91ghYPl0hAEvrAIthtOgQ3pOsqTQNroBvo3bSMgHFzZM\n"
+"9O6II8c+6zf1tRn4SWiw3te5djgdYZ6k/oI2peVKVuRF4fn9tBb6dNqcmzU5L/qw\n"
+"IFAGbHrQgLKm+a/sRxmPUDgH3KKHOVj4utWp+UhnMJbulHheb4mjUcAwhmahRWa6\n"
+"VOujw5H5SNz/0egwLX0tdHA114gk957EWW67c4cX8jJGKLhD+rcdqsq08p8kDi1L\n"
+"93FcXmn/6pUCyziKrlA4b9v7LWIbxcceVOF34GfID5yHI9Y/QCB/IIDEgEw+OyQm\n"
+"jgSubJrIqg0CAwEAAaOCATEwggEtMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/\n"
+"BAQDAgGGMB0GA1UdDgQWBBSEGMyFNOy8DJSULghZnMeyEE4KCDAfBgNVHSMEGDAW\n"
+"gBScXwDfqgHXMCs4iKK4bUqc8hGRgzB4BggrBgEFBQcBAQRsMGowLgYIKwYBBQUH\n"
+"MAGGImh0dHA6Ly9vY3NwLnJvb3RnMi5hbWF6b250cnVzdC5jb20wOAYIKwYBBQUH\n"
+"MAKGLGh0dHA6Ly9jcnQucm9vdGcyLmFtYXpvbnRydXN0LmNvbS9yb290ZzIuY2Vy\n"
+"MD0GA1UdHwQ2MDQwMqAwoC6GLGh0dHA6Ly9jcmwucm9vdGcyLmFtYXpvbnRydXN0\n"
+"LmNvbS9yb290ZzIuY3JsMBEGA1UdIAQKMAgwBgYEVR0gADANBgkqhkiG9w0BAQsF\n"
+"AAOCAQEAYjdCXLwQtT6LLOkMm2xF4gcAevnFWAu5CIw+7bMlPLVvUOTNNWqnkzSW\n"
+"MiGpSESrnO09tKpzbeR/FoCJbM8oAxiDR3mjEH4wW6w7sGDgd9QIpuEdfF7Au/ma\n"
+"eyKdpwAJfqxGF4PcnCZXmTA5YpaP7dreqsXMGz7KQ2hsVxa81Q4gLv7/wmpdLqBK\n"
+"bRRYh5TmOTFffHPLkIhqhBGWJ6bt2YFGpn6jcgAKUj6DiAdjd4lpFw85hdKrCEVN\n"
+"0FE6/V1dN2RMfjCyVSRCnTawXZwXgWHxyvkQAiSr6w10kY17RSlQOYiypok1JR4U\n"
+"akcjMS9cmvqtmg5iUaQqqcT5NJ0hGA==\n"
+"-----END CERTIFICATE-----\n";
 
-    esp_http_client_set_url(client, url);
-    free(url);
-
-    esp_http_client_set_header(client, "Authorization", API_KEY);
-
-    ESP_LOGI(TAG, "Setting Client");
-    // remove header
-    esp_http_client_delete_header(client, "Content-type");
-
-    esp_http_client_set_method(client, HTTP_METHOD_GET);
     
-    ESP_LOGI(TAG, "Sending request");
-    esp_err_t err = esp_http_client_perform(client);
+// opzetten basis configuratie
 
-    if (err == ESP_OK) {
-        ESP_LOGE(TAG, "HTTP POST request failed: %s\n", esp_err_to_name(err));
-    }
+    esp_http_client_config_t config = {
+        .url = "https://api.eu.assemblyai.com/v2",
+        .event_handler = _http_event_handler,
+        .cert_pem = server_cert_pem_start,
+    };
+
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+
+    ESP_LOGI(TAG, "Uploading file to assembly");
+    upload_file_to_assembly(client, file_path);
+
+    ESP_LOGI(TAG, "Transcribing....");
+    transcribe(client);
+
+    esp_http_client_cleanup(client);
+    vTaskDelete(0);
 }
 
 void upload_file_to_assembly(esp_http_client_handle_t client, char *file_path) {
@@ -320,20 +268,95 @@ void upload_file_to_assembly(esp_http_client_handle_t client, char *file_path) {
     free(file_buffer);
 }
 
-void check_file_exists(const char *path) {
-    struct stat st;
-    if (stat(path, &st) == 0) {
-        ESP_LOGI(TAG, "File exists: %s\n", path);
-    } else {
-        ESP_LOGE(TAG, "File does NOT exist: %s\n", path);
+void transcribe(esp_http_client_handle_t client) {
+    if (audio_url == NULL)
+    {
+        return;
+    }
+    
+    esp_http_client_set_url(client, "https://api.eu.assemblyai.com/v2/transcript");
+
+    // set new content-type header
+    esp_http_client_set_header(client, "Content-type", "application/json");
+
+    // printf("Url before making cJSON%s\n", audio_url);
+    // ready sending json
+    cJSON *jsonToSend = cJSON_CreateObject();
+    cJSON_AddItemToObject(jsonToSend, "audio_url", cJSON_CreateString(audio_url));
+    cJSON_AddItemToObject(jsonToSend, "language_detection", cJSON_CreateBool(true));
+
+    char *jsonData = cJSON_PrintUnformatted(jsonToSend);
+    ESP_LOGI(TAG, "final json:\n%s", jsonData);
+    esp_http_client_set_post_field(client, jsonData, strlen(jsonData));
+
+    esp_http_client_set_method(client, HTTP_METHOD_POST);
+    
+    esp_err_t err = esp_http_client_perform(client);
+
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "HTTP POST request failed: %s\n", esp_err_to_name(err));
+    }
+
+    cJSON_Delete(jsonToSend);
+    free(jsonData);
+}
+
+void get_transcript(esp_http_client_handle_t client) {
+    sleep(2);
+
+    ESP_LOGI(TAG, "Setting URL");
+    char* url = malloc((strlen(id) + 45));
+    if (!url) {
+        // Foutafhandeling als malloc niet lukt
+        ESP_LOGI(TAG, "Error: Memory allocation failed for URL");
+        return;
+    }
+
+    //Formatteer de URL met de gegeven id
+    snprintf(url, (strlen(id) + 45), "https://api.eu.assemblyai.com/v2/transcript/%s", id);
+
+    //Log de URL voor debugging
+    ESP_LOGI(TAG, "Generated URL: %s\n", url);
+
+    esp_http_client_set_url(client, url);
+    free(url);
+
+    esp_http_client_set_header(client, "Authorization", API_KEY);
+
+    ESP_LOGI(TAG, "Setting Client");
+    // remove header
+    esp_http_client_delete_header(client, "Content-type");
+
+    esp_http_client_set_method(client, HTTP_METHOD_GET);
+    
+    ESP_LOGI(TAG, "Sending request");
+    esp_err_t err = esp_http_client_perform(client);
+
+    if (err == ESP_OK) {
+        ESP_LOGE(TAG, "HTTP POST request failed: %s\n", esp_err_to_name(err));
     }
 }
 
-esp_err_t transcriber_transcribe_file(const char *file_path) {
-    if (file_path == NULL) {
-        ESP_LOGE(TAG, "File path is NULL");
-        return ESP_ERR_INVALID_ARG;
+void make_sdcard_ready()
+{
+    ESP_LOGI(TAG, "SD-kaart mounten...");
+
+    esp_vfs_fat_sdmmc_mount_config_t mount_config = {
+        .format_if_mount_failed = false,
+        .max_files = 5
+    };
+
+    sdmmc_card_t *card;
+    const char mount_point[] = "/sdcard";
+    
+    sdmmc_host_t host = SDMMC_HOST_DEFAULT();
+    sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
+    slot_config.width = 1;  // LyraT gebruikt 1-bit SD interface
+
+    esp_err_t ret = esp_vfs_fat_sdmmc_mount(mount_point, &host, &slot_config, &mount_config, &card);
+    if (ret != ESP_OK) {
+        ESP_LOGI(TAG, "Kan SD-kaart niet mounten");
+        return;
     }
-    transcribe_file_with_api((char *)file_path);
-    return ESP_OK;
+    ESP_LOGI(TAG, "SD-kaart succesvol gemount!");
 }

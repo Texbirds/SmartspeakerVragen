@@ -79,11 +79,5 @@ void stop_recording() {
     fatfs_stream_writer = NULL;
     is_recording = false;
 
-    ESP_LOGI(TAG, "Sending recorded audio for transcription...");
-    esp_err_t err = transcriber_transcribe_file(FILE_PATH);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Transcription failed with error: %s", esp_err_to_name(err));
-    } else {
-        ESP_LOGI(TAG, "Transcription complete.");
-    }
+    transcribe_file_with_api(FILE_PATH);
 }
