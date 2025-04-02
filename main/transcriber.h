@@ -37,3 +37,4 @@ void get_transcript(esp_http_client_handle_t client);
 
 void handle_http_event_finish(esp_http_client_handle_t client, cJSON *json);
 void make_sdcard_ready();
+void transcription_task(void *arg);

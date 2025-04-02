@@ -79,5 +79,5 @@ void stop_recording() {
     fatfs_stream_writer = NULL;
     is_recording = false;
 
-    transcribe_file_with_api(FILE_PATH);
+    xTaskCreate(transcription_task, "transcription_task", 16384, NULL, 5, NULL);
 }

@@ -3,6 +3,15 @@
 
 char *audio_url = "";
 char *id = "";
+typedef enum {
+    STATE_INITIAL,
+    STATE_FILE_UPLOADED,
+    STATE_TRANSCRIPTION_REQUESTED,
+    STATE_TRANSCRIPTION_ID_RECEIVED,
+    STATE_TRANSCRIPTION_TEXT_RECEIVED,
+} transcription_state_t;
+
+transcription_state_t transcription_state = STATE_INITIAL;
 
 void (*return_callback)(char*);
 
@@ -125,35 +134,36 @@ void handle_http_event_finish(esp_http_client_handle_t client, cJSON *json) {
     
     switch (state) {
         case 0: // uploading file, retrieving audio_url
-
             cJSON *temp_url = cJSON_GetObjectItem(json, "upload_url");
-            if (temp_url != NULL)
-            {
+            if (temp_url != NULL) {
                 audio_url = cJSON_GetStringValue(temp_url);
-                ESP_LOGI(TAG, "extracted audio_url: %s\n", audio_url);
-            }
-        break;
-        case 1: // transcript executed, retrieving id transcript
-            cJSON *temp_id = cJSON_GetObjectItem(json, "id");
-            if (temp_id != NULL)
-            {
-                // printf(cJSON_PrintUnformatted(temp_id));
-                id = cJSON_GetStringValue(temp_id);
-                ESP_LOGI(TAG, "extracted id:\n%s\n", id);
-                esp_http_client_close(client); // close client so reset connection
-                get_transcript(client);
+                ESP_LOGI(TAG, "extracted audio_url: %s", audio_url);
+                transcription_state = STATE_FILE_UPLOADED;
             }
             break;
-            case 2:
-                cJSON *temp_text = cJSON_GetObjectItem(json, "text");
-                if (temp_text != NULL)
-                {
-                    char *text = cJSON_GetStringValue(temp_text);
-                    ESP_LOGI(TAG, "extracted text:\n%s\n", text);
-                    ask_chatgpt(text);
-                }
-            break;    
-    }
+    
+        case 1: // transcript executed, retrieving id transcript
+            cJSON *temp_id = cJSON_GetObjectItem(json, "id");
+            if (temp_id != NULL) {
+                id = cJSON_GetStringValue(temp_id);
+                ESP_LOGI(TAG, "extracted id: %s", id);
+                transcription_state = STATE_TRANSCRIPTION_ID_RECEIVED;
+                esp_http_client_close(client); // reset connection
+                get_transcript(client); // move to next phase
+            }
+            break;
+    
+        case 2: // transcript text ready
+            cJSON *temp_text = cJSON_GetObjectItem(json, "text");
+            if (temp_text != NULL) {
+                char *text = cJSON_GetStringValue(temp_text);
+                ESP_LOGI(TAG, "extracted text:\n%s", text);
+                transcription_state = STATE_TRANSCRIPTION_TEXT_RECEIVED;
+                ask_chatgpt(text);
+                esp_http_client_cleanup(client);
+            }
+            break;
+    }    
 }
 
 void check_file_exists(const char *path) {
@@ -212,9 +222,6 @@ const char *server_cert_pem_start =
 
     ESP_LOGI(TAG, "Transcribing....");
     transcribe(client);
-
-    esp_http_client_cleanup(client);
-    vTaskDelete(0);
 }
 
 void upload_file_to_assembly(esp_http_client_handle_t client, char *file_path) {
@@ -303,38 +310,36 @@ void transcribe(esp_http_client_handle_t client) {
 }
 
 void get_transcript(esp_http_client_handle_t client) {
-    sleep(2);
+    if (transcription_state >= STATE_TRANSCRIPTION_TEXT_RECEIVED) {
+        ESP_LOGI(TAG, "Transcript already received, skipping.");
+        return;
+    }
+
+    sleep(2); // delay for polling
 
     ESP_LOGI(TAG, "Setting URL");
     char* url = malloc((strlen(id) + 45));
     if (!url) {
-        // Foutafhandeling als malloc niet lukt
-        ESP_LOGI(TAG, "Error: Memory allocation failed for URL");
+        ESP_LOGI(TAG, "Memory allocation failed for URL");
         return;
     }
 
-    //Formatteer de URL met de gegeven id
     snprintf(url, (strlen(id) + 45), "https://api.eu.assemblyai.com/v2/transcript/%s", id);
-
-    //Log de URL voor debugging
-    ESP_LOGI(TAG, "Generated URL: %s\n", url);
+    ESP_LOGI(TAG, "Generated URL: %s", url);
 
     esp_http_client_set_url(client, url);
     free(url);
 
     esp_http_client_set_header(client, "Authorization", API_KEY);
-
-    ESP_LOGI(TAG, "Setting Client");
-    // remove header
     esp_http_client_delete_header(client, "Content-type");
 
     esp_http_client_set_method(client, HTTP_METHOD_GET);
-    
+
     ESP_LOGI(TAG, "Sending request");
     esp_err_t err = esp_http_client_perform(client);
 
-    if (err == ESP_OK) {
-        ESP_LOGE(TAG, "HTTP POST request failed: %s\n", esp_err_to_name(err));
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
     }
 }
 
@@ -360,4 +365,10 @@ void make_sdcard_ready()
         return;
     }
     ESP_LOGI(TAG, "SD-kaart succesvol gemount!");
+}
+
+void transcription_task(void *arg) {
+    transcribe_file_with_api("/sdcard/ask.wav");
+    transcription_state = STATE_INITIAL;
+    vTaskDelete(NULL); 
 }

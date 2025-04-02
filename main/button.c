@@ -76,5 +76,5 @@ void init_mcp_button() {
     ESP_LOGI(TAG, "MCP23017 buttons initialized (Record:%d, ScrollDown:%d, ScrollUp:%d)",
              BUTTON_PIN_RECORD, BUTTON_PIN_SCROLL_DOWN, BUTTON_PIN_SCROLL_UP);
 
-    xTaskCreate(check_mcp_buttons_task, "check_mcp_buttons_task", 8196, NULL, 5, NULL);
+    xTaskCreate(check_mcp_buttons_task, "check_mcp_buttons_task", 16392, NULL, 5, NULL);
 }
