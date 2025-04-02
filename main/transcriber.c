@@ -1,4 +1,5 @@
 #include "transcriber.h"
+#include "chatgpt_api.h"
 
 char *audio_url = "";
 char *id = "";
@@ -142,16 +143,16 @@ void handle_http_event_finish(esp_http_client_handle_t client, cJSON *json) {
                 esp_http_client_close(client); // close client so reset connection
                 get_transcript(client);
             }
-        break;
-        case 2:
-            cJSON *temp_text = cJSON_GetObjectItem(json, "text");
-            if (temp_text != NULL)
-            {
-                char *text = cJSON_GetStringValue(temp_text);
-                ESP_LOGI(TAG, "extracted text:\n%s\n", text);
-                return_callback(text);
-            }
-        break;
+            break;
+            case 2:
+                cJSON *temp_text = cJSON_GetObjectItem(json, "text");
+                if (temp_text != NULL)
+                {
+                    char *text = cJSON_GetStringValue(temp_text);
+                    ESP_LOGI(TAG, "extracted text:\n%s\n", text);
+                    ask_chatgpt(text);
+                }
+            break;    
     }
 }
 
