@@ -4,6 +4,8 @@
 #include <inttypes.h>
 #include "esp_http_client.h"
 #include "esp_log.h"
+#include "lcd.h"
+#include "cJSON.h"
 
 #define OPENAI_API_KEY   "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"
 #define TAG              "ChatGPT"

@@ -10,6 +10,7 @@
 #include "nvs_flash.h"
 #include "esp_wifi.h"
 #include "chatgpt_api.h"
+#include "lcd.h"
 
 static const char *TAG = "MAIN";
 
@@ -26,6 +27,8 @@ void app_main(void) {
 
     make_sdcard_ready();
     init_mcp_button();
+
+    ask_chatgpt("Hello i am under the water");
 
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
