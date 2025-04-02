@@ -1,0 +1,50 @@
+# Visual Studio Code
+.vscode/
+
+# Compiled object files
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.libs
+
+# Executables and shared libraries
+*.exe
+*.out
+*.app
+*.so
+*.dylib
+*.dll
+
+# Build directories
+build/
+dist/
+Debug/
+Release/
+
+# Dependency directories
+node_modules/
+
+# Custom secrets
+main/secrets.h
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# CodeBlocks
+*.layout
+*.depend
+
+# Dev-C++
+*.dev
+*.layout
+
+# Miscellaneous
+*.log
+*.tmp
+*.swp
+*.swo

@@ -5,9 +5,9 @@
 #include "esp_http_client.h"
 #include "esp_log.h"
 #include "lcd.h"
-#include "cJSON.h"  // Required to parse JSON
+#include "cJSON.h"  
+#include "secrets.h"  // Needed for the openai api key
 
-#define OPENAI_API_KEY   "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"  // Truncated for clarity
 #define TAG              "ChatGPT"
 #define MODEL            "gpt-3.5-turbo"
 #define CHAT_ENDPOINT    "https://api.openai.com/v1/chat/completions"
