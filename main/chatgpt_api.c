@@ -88,7 +88,6 @@ void ask_chatgpt(const char *question) {
     if (cJSON_IsString(content)) {
         const char *reply = content->valuestring;
         ESP_LOGI(TAG, "ChatGPT reply: %s", reply);
-
         lcd_scroll_set_text(reply);
     } else {
         ESP_LOGE(TAG, "Invalid JSON: 'content' is not a string");
