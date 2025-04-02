@@ -8,11 +8,13 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
+// I2C config
 #define I2C_PORT I2C_NUM_0
 #define I2C_SDA_PIN 18
 #define I2C_SCL_PIN 23
 #define MCP23017_ADDR 0x20
 
+// button pin mappings
 #define BUTTON_PIN_RECORD 2
 #define BUTTON_PIN_SCROLL_DOWN 0
 #define BUTTON_PIN_SCROLL_UP 1
@@ -22,6 +24,8 @@
 static const char *TAG = "MCP_Button";
 static mcp23x17_t mcp;
 
+// checks all MCP buttons in a loop
+// toggles recording and handles LCD scrolling
 void check_mcp_buttons_task(void *arg) {
     uint32_t last_press_time_record = 0;
     uint32_t last_press_time_scroll_down = 0;
@@ -30,10 +34,10 @@ void check_mcp_buttons_task(void *arg) {
 
     while (1) {
         uint8_t level;
-
-        // Check recording button
-        ESP_ERROR_CHECK(mcp23x17_get_level(&mcp, BUTTON_PIN_RECORD, &level));
         uint32_t now = xTaskGetTickCount() * portTICK_PERIOD_MS;
+
+        // check record button
+        ESP_ERROR_CHECK(mcp23x17_get_level(&mcp, BUTTON_PIN_RECORD, &level));
         if (level == 0 && (now - last_press_time_record > DEBOUNCE_TIME_MS)) {
             last_press_time_record = now;
             recording = !recording;
@@ -45,7 +49,7 @@ void check_mcp_buttons_task(void *arg) {
             }
         }
 
-        // Check scroll down button
+        // check scroll down
         ESP_ERROR_CHECK(mcp23x17_get_level(&mcp, BUTTON_PIN_SCROLL_DOWN, &level));
         if (level == 0 && (now - last_press_time_scroll_down > DEBOUNCE_TIME_MS)) {
             last_press_time_scroll_down = now;
@@ -53,7 +57,7 @@ void check_mcp_buttons_task(void *arg) {
             lcd_scroll_down();
         }
 
-        // Check scroll up button
+        // check scroll up
         ESP_ERROR_CHECK(mcp23x17_get_level(&mcp, BUTTON_PIN_SCROLL_UP, &level));
         if (level == 0 && (now - last_press_time_scroll_up > DEBOUNCE_TIME_MS)) {
             last_press_time_scroll_up = now;
@@ -65,6 +69,7 @@ void check_mcp_buttons_task(void *arg) {
     }
 }
 
+// sets up MCP and button pins, then starts button task
 void init_mcp_button() {
     ESP_ERROR_CHECK(i2cdev_init());
     ESP_ERROR_CHECK(mcp23x17_init_desc(&mcp, MCP23017_ADDR, I2C_PORT, I2C_SDA_PIN, I2C_SCL_PIN));

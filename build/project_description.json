@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "living_stream_m3u_aac",
-    "project_version":    "a4c3f00-dirty",
+    "project_version":    "70e0417-dirty",
     "project_path":       "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard",
     "idf_path":           "C:/esp/v5.1.6/esp-idf",
     "build_dir":          "C:/Users/kwint/OneDrive/Bureaublad/Smartspeaker_vragen/pipeline_recording_to_sdcard/build",

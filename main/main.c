@@ -29,8 +29,6 @@ void app_main(void) {
     init_mcp_button();
     lcd_init();
 
-    // ask_chatgpt("Hello i am under the water");
-
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
     }

@@ -1,5 +1,7 @@
 // button.h
-#ifndef BUTTON_MCP_H
-#define BUTTON_MCP_H
+#ifndef BUTTON_H
+#define BUTTON_H
+
 void init_mcp_button();
+
 #endif
