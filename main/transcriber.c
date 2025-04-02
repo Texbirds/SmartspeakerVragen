@@ -1,5 +1,6 @@
 #include "transcriber.h"
 #include "chatgpt_api.h"
+#include "secrets.h"
 
 char *audio_url = "";
 char *id = "";

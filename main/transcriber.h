@@ -24,7 +24,6 @@
 
 #define MAX_HTTP_RECV_BUFFER 512
 #define MAX_HTTP_OUTPUT_BUFFER 2048
-#define API_KEY "36074272bf2a401c94c00a4995743d20"
 
 // USE THIS FOR API CALLS!!!
 void set_callback(void (*new_update_callback)(char*));
