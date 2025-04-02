@@ -27,6 +27,7 @@ void app_main(void) {
 
     make_sdcard_ready();
     init_mcp_button();
+    lcd_init();
 
     ask_chatgpt("Hello i am under the water");
 
